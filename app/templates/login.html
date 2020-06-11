@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Rate the following movies:</h2>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.m1.label }} : {{ form.m1(size=32) }}
+        </p>
+        <p>
+            {{ form.m2.label }} : {{ form.m2(size=32) }}
+        </p>
+        <p>
+            {{ form.m3.label }} : {{ form.m3(size=32) }}
+        </p>
+        <p>
+            {{ form.m4.label }} : {{ form.m4(size=32) }}
+        </p>
+        <p>
+            {{ form.m5.label }} : {{ form.m5(size=32) }}
+        </p>
+        <p>
+            {{ form.m6.label }} : {{ form.m6(size=32) }}
+        </p>
+        <p>
+            {{ form.m7.label }} : {{ form.m7(size=32) }}
+        </p>
+        <p>
+            {{ form.m8.label }} : {{ form.m8(size=32) }}
+        </p>
+        <p>
+            {{ form.m9.label }} : {{ form.m9(size=32) }}
+        </p>
+        <p>
+            {{ form.m10.label }} : {{ form.m10(size=32) }}
+        </p>
+        <p>
+            {{ form.m11.label }} : {{ form.m11(size=32) }}
+        </p>
+        <p>
+            {{ form.m12.label }} : {{ form.m12(size=32) }}
+        </p>
+        <p>
+            {{ form.m13.label }} : {{ form.m13(size=32) }}
+        </p>
+        <p>
+            {{ form.m14.label }} : {{ form.m14(size=32) }}
+        </p>
+        <p>
+            {{ form.m15.label }} : {{ form.m15(size=32) }}
+        </p>
+        <p>
+            {{ form.m16.label }} : {{ form.m16(size=32) }}
+        </p>
+        <p>
+            {{ form.m17.label }} : {{ form.m17(size=32) }}
+        </p>
+        <p>
+            {{ form.m18.label }} : {{ form.m18(size=32) }}
+        </p>
+        <p>
+            {{ form.m19.label }} : {{ form.m19(size=32) }}
+        </p>
+        <p>
+            {{ form.m20.label }} : {{ form.m20(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

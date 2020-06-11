@@ -1,0 +1,18 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Recommender</title>
+      {% else %}
+      <title>Welcome to Recommender Engine</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>
+            Recommender:
+            <a href="/index">Home</a>
+            <a href="/login">Login</a>
+        </div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
