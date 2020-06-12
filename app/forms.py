@@ -5,13 +5,12 @@ import csv
 import random
 import pandas as pd
 
-colnames = ['movie_id', 'title', 'genres']
-data = pd.read_csv('/home/kriti/RecommenderEngine/app/data/movies.csv', names=colnames)
+data = pd.read_csv('/home/kriti/RecommenderEngine/app/data/movies.csv', sep='\t', encoding='latin-1', usecols=['movie_id', 'title', 'genres'])
 
-names = data.movie_id.tolist()
+names = data.title.tolist()
 sampled_name = random.sample(names, 20)
 
-class LoginForm(FlaskForm):
+class RateForm(FlaskForm):
     m1 = IntegerField(sampled_name[0])
     m2 = IntegerField(sampled_name[1])
     m3 = IntegerField(sampled_name[2])
