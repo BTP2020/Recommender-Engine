@@ -106,7 +106,7 @@ def rate():
 
         # ratings = pd.read_csv('/home/kriti/RecommenderEngine/app/data/ratings.csv', sep='\t', encoding='latin-1', usecols=['user_id', 'movie_id', 'rating'])
         # users = pd.read_csv('users.csv', sep='\t', encoding='latin-1', usecols=['user_id', 'gender', 'zipcode', 'age_desc', 'occ_desc'])
-        movies = pd.read_csv('/home/kriti/RecommenderEngine/app/data/movies.csv', sep='\t', encoding='latin-1', usecols=['movie_id', 'title', 'genres'])
+        movies = pd.read_csv('data/movies.csv', sep='\t', encoding='latin-1', usecols=['movie_id', 'title', 'genres'])
 
         movies['genres'] = movies['genres'].str.split('|')
         movies['genres'] = movies['genres'].fillna("").astype('str')

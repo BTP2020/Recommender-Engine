@@ -5,7 +5,7 @@ import csv
 import random
 import pandas as pd
 
-data = pd.read_csv('/home/kriti/RecommenderEngine/app/data/movies.csv', sep='\t', encoding='latin-1', usecols=['movie_id', 'title', 'genres'])
+data = pd.read_csv('data/movies.csv', sep='\t', encoding='latin-1', usecols=['movie_id', 'title', 'genres'])
 
 names = data.title.tolist()
 sampled_name = random.sample(names, 20)
