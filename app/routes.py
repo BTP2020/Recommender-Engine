@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, request
+from flask import render_template, flash, redirect, request, url_for
 from app import app
 from app.forms import RateForm, sampled_name
 import numpy as np
@@ -21,6 +21,7 @@ def index():
         }
     ]
     return render_template('index.html', title='Home', user=user, posts=posts)
+
 
 @app.route('/rate', methods=['GET', 'POST'])
 def rate():
@@ -119,13 +120,23 @@ def rate():
         titles = movies['title']
         indices = pd.Series(movies.index, index=movies['title'])
 
-        print(genre_recommendations(sampled_name[final_list[0]], indices, cosine_sim, titles).head(5))
-        print(genre_recommendations(sampled_name[final_list[1]], indices, cosine_sim, titles).head(5))
-        print(genre_recommendations(sampled_name[final_list[2]], indices, cosine_sim, titles).head(5))
-        print(genre_recommendations(sampled_name[final_list[3]], indices, cosine_sim, titles).head(5))
-        print(genre_recommendations(sampled_name[final_list[4]], indices, cosine_sim, titles).head(5))
+        recom1 = genre_recommendations(sampled_name[final_list[0]], indices, cosine_sim, titles).head(5)
+        recom2 = genre_recommendations(sampled_name[final_list[1]], indices, cosine_sim, titles).head(5)
+        recom3 = genre_recommendations(sampled_name[final_list[2]], indices, cosine_sim, titles).head(5)
+        recom4 = genre_recommendations(sampled_name[final_list[3]], indices, cosine_sim, titles).head(5)
+        recom5 = genre_recommendations(sampled_name[final_list[4]], indices, cosine_sim, titles).head(5)
 
-        return redirect(request.url)
+        print(recom1)
+        print(recom2)
+        print(recom3)
+        print(recom4)
+        print(recom5)
+
+        # generate(recom1, recom2, recom3, recom4)
+        recoms = [recom1.to_string(), recom2.to_string(), recom3.to_string(), recom4.to_string(), recom5.to_string()]
+
+        # return redirect(url_for('.recommend', recoms=recoms))
+        return render_template('recommender.html', title='Recommend', recoms=recoms)
 
     return render_template('rate.html', title='Rate', form=form)
 
@@ -136,3 +147,20 @@ def genre_recommendations(title, indices, cosine_sim, titles):
     sim_scores = sim_scores[1:21]
     movie_indices = [i[0] for i in sim_scores]
     return titles.iloc[movie_indices]
+
+# r1 = None
+# r2 = None
+# r3 = None
+# r4 = None
+
+# def generate(recom1, recom2, recom3, recom4):
+#     r1 = recom1
+#     r2 = recom2
+#     r3 = recom3
+#     r4 = recom4
+
+
+# @app.route('/recommendations')
+# def recommend():
+#     recom = recoms
+#     return render_template('recommender.html', title='Recommendations', recom=recom)
