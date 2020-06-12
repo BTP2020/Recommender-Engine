@@ -119,7 +119,11 @@ def rate():
         titles = movies['title']
         indices = pd.Series(movies.index, index=movies['title'])
 
-        print(genre_recommendations(sampled_name[final_list[0]], indices, cosine_sim, titles).head(20))
+        print(genre_recommendations(sampled_name[final_list[0]], indices, cosine_sim, titles).head(5))
+        print(genre_recommendations(sampled_name[final_list[1]], indices, cosine_sim, titles).head(5))
+        print(genre_recommendations(sampled_name[final_list[2]], indices, cosine_sim, titles).head(5))
+        print(genre_recommendations(sampled_name[final_list[3]], indices, cosine_sim, titles).head(5))
+        print(genre_recommendations(sampled_name[final_list[4]], indices, cosine_sim, titles).head(5))
 
         return redirect(request.url)
 
