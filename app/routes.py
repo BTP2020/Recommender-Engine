@@ -1,6 +1,10 @@
 from flask import render_template, flash, redirect, request
 from app import app
 from app.forms import RateForm, sampled_name
+import numpy as np
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
 
 @app.route('/')
 @app.route('/index')
@@ -97,11 +101,34 @@ def rate():
 
         if(lengthfinal > 5):
             final_list = final_list[:5]
-        
-        print(lengthfinal)
 
-        print(sampled_name[final_list[0]])
+
+        # ratings = pd.read_csv('/home/kriti/RecommenderEngine/app/data/ratings.csv', sep='\t', encoding='latin-1', usecols=['user_id', 'movie_id', 'rating'])
+        # users = pd.read_csv('users.csv', sep='\t', encoding='latin-1', usecols=['user_id', 'gender', 'zipcode', 'age_desc', 'occ_desc'])
+        movies = pd.read_csv('/home/kriti/RecommenderEngine/app/data/movies.csv', sep='\t', encoding='latin-1', usecols=['movie_id', 'title', 'genres'])
+
+        movies['genres'] = movies['genres'].str.split('|')
+        movies['genres'] = movies['genres'].fillna("").astype('str')
+        tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
+        tfidf_matrix = tf.fit_transform(movies['genres'])
+        print(tfidf_matrix.shape)
+
+        cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+        print(cosine_sim[:4, :4])
+
+        titles = movies['title']
+        indices = pd.Series(movies.index, index=movies['title'])
+
+        print(genre_recommendations(sampled_name[final_list[0]], indices, cosine_sim, titles).head(20))
 
         return redirect(request.url)
 
     return render_template('rate.html', title='Rate', form=form)
+
+def genre_recommendations(title, indices, cosine_sim, titles):
+    idx = indices[title]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[1:21]
+    movie_indices = [i[0] for i in sim_scores]
+    return titles.iloc[movie_indices]
